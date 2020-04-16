@@ -1,14 +1,5 @@
 import json
-test = """{
-  "title": "iPhone X",
-  "price": 100,
-  "location": {
-    "address": "город Самара, улица Мориса Тореза, 50",
-    "metro_stations": ["Спортивная", "Гагаринская"]
-  }
-}"""
 
-test = json.loads(test)
 
 class AttributeParser:
     def __init__(self, item):
@@ -16,6 +7,7 @@ class AttributeParser:
             if isinstance(value, dict):
                 value = AttributeParser(value)
             self.__dict__[key] = value
+
 
 class Advert(AttributeParser):
     def __init__(self, base):
@@ -25,6 +17,7 @@ class Advert(AttributeParser):
 
     def __repr__(self):
         return f'{self.title} | {self.price} ₽'
+
 
 class ColorizeMixin:
     @property
@@ -41,6 +34,16 @@ class Advert(ColorizeMixin, Advert):
 
 
 if __name__ == "__main__":
+    test = """{
+      "title": "iPhone X",
+      "price": 100,
+      "location": {
+        "address": "город Самара, улица Мориса Тореза, 50",
+        "metro_stations": ["Спортивная", "Гагаринская"]
+      }
+    }"""
+
+    test = json.loads(test)
     iphone = Advert(test)
     print(iphone)
 
